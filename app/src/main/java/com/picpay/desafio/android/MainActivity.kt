@@ -1,5 +1,7 @@
 package com.picpay.desafio.android
 
+import android.content.Context
+import android.util.AttributeSet
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -8,7 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.picpay.desafio.android.viewmodel.MainViewModel
 import okhttp3.OkHttpClient
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,25 +26,38 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: UserListAdapter
 
-    private val url = "http://careers.picpay.com/tests/mobdev/"
-
-    private val gson: Gson by lazy { GsonBuilder().create() }
-
-    private val okHttp: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .build()
+    private val repository: MainRepository by inject()
+    private val viewModel: MainViewModel by inject() {
+        parametersOf(repository)
     }
 
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(url)
-            .client(okHttp)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-    }
+//    private val url = "http://careers.picpay.com/tests/mobdev/"
+//
+//    private val gson: Gson by lazy { GsonBuilder().create() }
+//
+//    private val okHttp: OkHttpClient by lazy {
+//        OkHttpClient.Builder()
+//            .build()
+//    }
+//
+//    private val retrofit: Retrofit by lazy {
+//        Retrofit.Builder()
+//            .baseUrl(url)
+//            .client(okHttp)
+//            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .build()
+//    }
 
-    private val service: PicPayService by lazy {
-        retrofit.create(PicPayService::class.java)
+//    private val service: PicPayService by lazy {
+//        retrofit.create(PicPayService::class.java)
+//    }
+
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+
+//        viewModel.getUsers()
+        viewModel.getUsers()
+
+        return super.onCreateView(name, context, attrs)
     }
 
     override fun onResume() {
@@ -53,23 +71,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         progressBar.visibility = View.VISIBLE
-        service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                    val message = getString(R.string.error)
 
-                    progressBar.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
-
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    progressBar.visibility = View.GONE
-
-                    adapter.users = response.body()!!
-                }
-            })
+//        service.getUsers()
+//            .enqueue(object : Callback<List<User>> {
+//                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+//                    val message = getString(R.string.error)
+//
+//                    progressBar.visibility = View.GONE
+//                    recyclerView.visibility = View.GONE
+//
+//                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//
+//                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+//                    progressBar.visibility = View.GONE
+//
+//                    adapter.users = response.body()!!
+//                }
+//            })
     }
 }
