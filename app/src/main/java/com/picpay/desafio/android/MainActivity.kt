@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -46,9 +47,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         adapter = UserListAdapter()
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
 
         progressBar.visibility = View.VISIBLE
+        viewModel.userListLiveData.observe(this ) {
+
+        }
 
         viewModel.getUsers()
 //        service.getUsers()
