@@ -31,31 +31,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         parametersOf(repository)
     }
 
-//    private val url = "http://careers.picpay.com/tests/mobdev/"
-//
-//    private val gson: Gson by lazy { GsonBuilder().create() }
-//
-//    private val okHttp: OkHttpClient by lazy {
-//        OkHttpClient.Builder()
-//            .build()
-//    }
-//
-//    private val retrofit: Retrofit by lazy {
-//        Retrofit.Builder()
-//            .baseUrl(url)
-//            .client(okHttp)
-//            .addConverterFactory(GsonConverterFactory.create(gson))
-//            .build()
-//    }
-
-//    private val service: PicPayService by lazy {
-//        retrofit.create(PicPayService::class.java)
-//    }
-
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
 
 //        viewModel.getUsers()
-        viewModel.getUsers()
 
         return super.onCreateView(name, context, attrs)
     }
@@ -72,6 +50,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         progressBar.visibility = View.VISIBLE
 
+        viewModel.getUsers()
 //        service.getUsers()
 //            .enqueue(object : Callback<List<User>> {
 //                override fun onFailure(call: Call<List<User>>, t: Throwable) {
