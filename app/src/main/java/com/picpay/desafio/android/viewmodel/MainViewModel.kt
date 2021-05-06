@@ -1,17 +1,15 @@
 package com.picpay.desafio.android.viewmodel
 
-import androidx.lifecycle.*
-import com.picpay.desafio.android.MainRepository
-import com.picpay.desafio.android.PicPayService
-
-import com.picpay.desafio.android.datasource.BaseDataSource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.picpay.desafio.android.service.PicPayService
 import com.picpay.desafio.android.model.User
-import org.koin.core.parameter.parametersOf
+import com.picpay.desafio.android.repository.MainRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.Serializable
-import java.util.*
 
 class MainViewModel(private val repository: MainRepository): ViewModel(), Serializable {
 
@@ -27,9 +25,10 @@ class MainViewModel(private val repository: MainRepository): ViewModel(), Serial
     }
 
     fun loadUsers() {
-        service.getUsers().enqueue(object : Callback<List<User>> {
+        service.getUsers()
+            .enqueue(object : Callback<List<User>> {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    if (response.body() == null)  {
+                    if (response.body() == null) {
                         userListMutable.postValue(arrayListOf())
                     } else {
                         response.body()?.let {

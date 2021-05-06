@@ -1,5 +1,7 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.modules
 
+import com.picpay.desafio.android.adapter.UserListAdapter
+import com.picpay.desafio.android.repository.MainRepository
 import com.picpay.desafio.android.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
