@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.viewmodel
+package com.picpay.desafio.android.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,10 +18,17 @@ class MainViewModel(private val repository: MainRepository): ViewModel(), Serial
     private val loadUsersListMutable = MutableLiveData<List<User>>()
     private val loadUsersListMutableError = MutableLiveData<Int>()
 
+    val contactClickLiveData : LiveData<User> get() = contactClickMutable
+    val contactClickMutable = MutableLiveData<User>()
+
     var users = emptyList<User>()
 
     private val service: PicPayService by lazy {
         repository.picPayService
+    }
+
+    init {
+        android.util.Log.i("viewmodel", "cirando viewmodel")
     }
 
     fun loadUsers() {
@@ -41,5 +48,11 @@ class MainViewModel(private val repository: MainRepository): ViewModel(), Serial
                     loadUsersListMutableError.postValue(-1)
                 }
             })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        android.util.Log.e("viewmodel", "oncleared")
     }
 }

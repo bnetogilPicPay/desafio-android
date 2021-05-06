@@ -1,15 +1,18 @@
-package com.picpay.desafio.android.adapter
+package com.picpay.desafio.android.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.databinding.ListItemUserBinding
 import com.picpay.desafio.android.model.User
 import com.picpay.desafio.android.util.UserListDiffCallback
-import com.picpay.desafio.android.viewholder.UserListItemViewHolder
+import com.picpay.desafio.android.ui.viewholder.UserListItemViewHolder
+import com.picpay.desafio.android.ui.viewmodel.MainViewModel
 
-class UserListAdapter() : RecyclerView.Adapter<UserListItemViewHolder>() {
+class UserListAdapter(val viewModel: MainViewModel) : RecyclerView.Adapter<UserListItemViewHolder>() {
 
     var users = emptyList<User>()
         set(value) {
@@ -33,7 +36,7 @@ class UserListAdapter() : RecyclerView.Adapter<UserListItemViewHolder>() {
         holder.bind(users[position])
 
         holder.view.itemUser.setOnClickListener {
-            android.util.Log.e("UserList", "${users[position]}")
+            viewModel.contactClickMutable.postValue(users[position])
         }
     }
 
