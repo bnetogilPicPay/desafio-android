@@ -13,10 +13,10 @@ import java.io.Serializable
 
 class MainViewModel(private val repository: MainRepository): ViewModel(), Serializable {
 
-    val userListLiveData : LiveData<List<User>> get() = userListMutable
-    val userListLiveDataError : LiveData<Int> get() = userListMutableError
-    private val userListMutable = MutableLiveData<List<User>>()
-    private val userListMutableError = MutableLiveData<Int>()
+    val loadUsersListLiveData : LiveData<List<User>> get() = loadUsersListMutable
+    val loadUsersLiveDataError : LiveData<Int> get() = loadUsersListMutableError
+    private val loadUsersListMutable = MutableLiveData<List<User>>()
+    private val loadUsersListMutableError = MutableLiveData<Int>()
 
     var users = emptyList<User>()
 
@@ -29,16 +29,16 @@ class MainViewModel(private val repository: MainRepository): ViewModel(), Serial
             .enqueue(object : Callback<List<User>> {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                     if (response.body() == null) {
-                        userListMutable.postValue(arrayListOf())
+                        loadUsersListMutable.postValue(arrayListOf())
                     } else {
                         response.body()?.let {
-                            userListMutable.postValue(it)
+                            loadUsersListMutable.postValue(it)
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<List<User>>, throwable: Throwable) {
-                    userListMutableError.postValue(-1)
+                    loadUsersListMutableError.postValue(-1)
                 }
             })
     }

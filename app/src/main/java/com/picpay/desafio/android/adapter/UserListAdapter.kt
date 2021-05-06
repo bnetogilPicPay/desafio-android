@@ -31,6 +31,10 @@ class UserListAdapter() : RecyclerView.Adapter<UserListItemViewHolder>() {
 
     override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {
         holder.bind(users[position])
+
+        holder.view.itemUser.setOnClickListener {
+            android.util.Log.e("UserList", "${users[position]}")
+        }
     }
 
     override fun getItemCount(): Int = users.size

@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        android.util.Log.e("MainActivity", "${viewModel.users}")
-
         configureViewModelLiveData()
         configureView()
         showLoading()
@@ -39,10 +37,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun configureViewModelLiveData() {
         viewModel.let {
-            it.userListLiveData.observe(this) {
+            it.loadUsersListLiveData.observe(this) {
                 updateUserList(it)
             }
-            it.userListLiveDataError.observe(this) {
+            it.loadUsersLiveDataError.observe(this) {
                 // TODO: Add Failed Message
             }
         }
