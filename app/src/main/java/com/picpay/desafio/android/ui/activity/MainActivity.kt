@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 
 import com.picpay.desafio.android.R
@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         parametersOf(viewModel)
     }
 
-//    private val viewModel1 by activityViewModels()
     private val viewModel: MainViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +36,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun loadData(savedInstanceState: Bundle?) {
+
         existSerializableData(savedInstanceState)?.let {
             savedInstanceState?.getSerializable("Data")?.let {
                 viewModel.users = it as List<User>
