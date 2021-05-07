@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun configureSupportActionBar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.title = resources.getString(R.string.str_user_list)
+        supportActionBar?.title = resources.getString(R.string.title)
     }
 
     private fun configureViewModelLiveData() {
