@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         parametersOf(viewModel)
     }
 
+//    private val viewModel1 by activityViewModels()
     private val viewModel: MainViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
