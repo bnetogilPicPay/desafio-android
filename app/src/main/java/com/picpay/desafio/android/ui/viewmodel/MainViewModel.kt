@@ -3,15 +3,15 @@ package com.picpay.desafio.android.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.picpay.desafio.android.service.PicPayService
 import com.picpay.desafio.android.model.User
 import com.picpay.desafio.android.repository.MainRepository
+import com.picpay.desafio.android.service.PicPayService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.Serializable
 
-class MainViewModel(private val repository: MainRepository): ViewModel(), Serializable {
+class MainViewModel(private val repository: MainRepository): ViewModel() {
 
     val loadUsersListLiveData : LiveData<List<User>> get() = loadUsersListMutable
     val loadUsersLiveDataError : LiveData<Int> get() = loadUsersListMutableError
@@ -25,10 +25,6 @@ class MainViewModel(private val repository: MainRepository): ViewModel(), Serial
 
     private val service: PicPayService by lazy {
         repository.picPayService
-    }
-
-    init {
-        android.util.Log.i("viewmodel", "cirando viewmodel")
     }
 
     fun loadUsers() {
@@ -48,11 +44,5 @@ class MainViewModel(private val repository: MainRepository): ViewModel(), Serial
                     loadUsersListMutableError.postValue(-1)
                 }
             })
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-
-        android.util.Log.e("viewmodel", "oncleared")
     }
 }

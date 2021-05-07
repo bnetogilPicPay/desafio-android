@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
+
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.model.User
 import com.picpay.desafio.android.ui.adapter.UserListAdapter
@@ -29,9 +31,34 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         configureSupportActionBar()
         configureViewModelLiveData()
         configureAdapter()
-        showLoading()
 
-        viewModel.loadUsers()
+        loadData(savedInstanceState)
+    }
+
+    private fun loadData(savedInstanceState: Bundle?) {
+        existSerializableData(savedInstanceState)?.let {
+            savedInstanceState?.getSerializable("Data")?.let {
+                viewModel.users = it as List<User>
+                adapter.users = viewModel.users
+                adapter.notifyDataSetChanged()
+
+                hideLoading()
+            }
+        }
+
+        if (viewModel.users.isEmpty()) {
+            showLoading()
+            viewModel.loadUsers()
+        }
+    }
+
+    private fun existSerializableData(savedInstanceState: Bundle?): Boolean? {
+        return savedInstanceState?.containsKey("Data")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("Data", viewModel.users as Serializable)
+        super.onSaveInstanceState(outState)
     }
 
     private fun configureSupportActionBar() {
@@ -49,6 +76,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 // TODO: Add Failed Message
             }
             it.contactClickLiveData.observe(this) {
+                android.util.Log.e("MainActivity", "userclick: $it")
                 openUserDetailActivity(it as User)
             }
         }
