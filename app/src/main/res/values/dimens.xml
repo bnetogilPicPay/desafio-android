@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="content_user_detail_edit_nome_margin_top">20dp</dimen>
+    <dimen name="content_user_detail_picture_width_height">150dp</dimen>
+    <dimen name="content_user_detail_picture_margin_top">20dp</dimen>
+    <dimen name="content_user_detail_padding">6dp</dimen>
+</resources>

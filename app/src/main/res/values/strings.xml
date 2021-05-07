@@ -11,5 +11,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="str_username">Nome do Usuário</string>
+    <string name="str_name">Nome</string>
+    <string name="str_details">Detalhes</string>
+    <string name="str_user_list">Lista de Usuários</string>
 
 </resources>
