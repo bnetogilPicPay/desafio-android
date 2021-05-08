@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
-
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.model.User
 import com.picpay.desafio.android.ui.adapter.UserListAdapter
@@ -24,6 +22,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private val viewModel: MainViewModel by inject()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

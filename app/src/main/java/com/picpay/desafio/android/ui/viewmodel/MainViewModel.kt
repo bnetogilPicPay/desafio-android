@@ -9,7 +9,6 @@ import com.picpay.desafio.android.service.PicPayService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.Serializable
 
 class MainViewModel(private val repository: MainRepository): ViewModel() {
 
@@ -21,6 +20,8 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
     val contactClickLiveData : LiveData<User> get() = contactClickMutable
     val contactClickMutable = MutableLiveData<User>()
 
+
+    // TODO: Mover
     var users = emptyList<User>()
 
     private val service: PicPayService by lazy {
