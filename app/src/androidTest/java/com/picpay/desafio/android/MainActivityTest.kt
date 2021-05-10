@@ -49,7 +49,10 @@ class MainActivityTest {
             val expectedTitle = context.getString(R.string.title)
 
             onView(withText(expectedTitle)).check(matches(isDisplayed()))
+            onView()
         }
+
+
 
         server.close()
     }
