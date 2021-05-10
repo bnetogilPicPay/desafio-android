@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.model.MainModel
 import com.picpay.desafio.android.model.User
@@ -12,13 +12,11 @@ import com.picpay.desafio.android.repository.MainRepository
 import com.picpay.desafio.android.service.PicPayService
 import com.picpay.desafio.android.ui.adapter.UserListAdapter
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
-import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.view.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 import java.io.Serializable
-import java.util.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
