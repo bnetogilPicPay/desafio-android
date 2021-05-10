@@ -1,12 +1,10 @@
 package com.picpay.desafio.android.repository
 
-import androidx.lifecycle.ViewModel
-import com.picpay.desafio.android.service.PicPayService
 import com.picpay.desafio.android.datasource.BaseDataSource
+import com.picpay.desafio.android.service.PicPayService
 import java.io.Serializable
 
-class MainRepository: ViewModel(), Serializable {
-
+class MainRepository: Serializable {
     private val dataSource: BaseDataSource by lazy {
         BaseDataSource()
     }

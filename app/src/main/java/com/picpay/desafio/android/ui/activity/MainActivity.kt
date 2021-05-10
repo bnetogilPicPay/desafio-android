@@ -6,14 +6,19 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.model.MainModel
 import com.picpay.desafio.android.model.User
+import com.picpay.desafio.android.repository.MainRepository
+import com.picpay.desafio.android.service.PicPayService
 import com.picpay.desafio.android.ui.adapter.UserListAdapter
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.view.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 import java.io.Serializable
+import java.util.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -21,8 +26,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         parametersOf(viewModel)
     }
 
+    private val repository: MainRepository by inject()
     private val viewModel: MainViewModel by inject()
 
+    private val service: PicPayService by lazy {
+        repository.picPayService
+    }
+
+    private val model: MainModel by inject {
+        parametersOf(viewModel, service)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,20 +48,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun loadData(savedInstanceState: Bundle?) {
-
         existSerializableData(savedInstanceState)?.let {
             savedInstanceState?.getSerializable("Data")?.let {
-                viewModel.users = it as List<User>
-                adapter.users = viewModel.users
+                model.users = it as List<User>
+                adapter.users = model.users
                 adapter.notifyDataSetChanged()
 
                 hideLoading()
             }
         }
 
-        if (viewModel.users.isEmpty()) {
+        if (model.users.isEmpty()) {
             showLoading()
-            viewModel.loadUsers()
+            model.loadUsers()
         }
     }
 
@@ -57,7 +69,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("Data", viewModel.users as Serializable)
+        outState.putSerializable("Data", model.users as Serializable)
         super.onSaveInstanceState(outState)
     }
 
@@ -69,16 +81,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun configureViewModelLiveData() {
         viewModel.let {
-            it.loadUsersListLiveData.observe(this) {
+            it.loadUsersListLiveData.observe(this, Observer {
+                hideLoading()
                 updateUserList(it)
-            }
-            it.loadUsersLiveDataError.observe(this) {
-                // TODO: Add Failed Message
-            }
-            it.contactClickLiveData.observe(this) {
+            })
+            it.loadUsersLiveDataError.observe(this, Observer {
+                hideLoading()
+            })
+            it.loadUsersListEmptyLiveData.observe(this, Observer {
+                hideLoading()
+            })
+            it.contactClickLiveData.observe(this, Observer {
                 android.util.Log.e("MainActivity", "userclick: $it")
                 openUserDetailActivity(it as User)
-            }
+            })
         }
     }
 
@@ -94,11 +110,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun updateUserList(userList: List<User>) {
-        viewModel.users = userList
-        adapter.users = viewModel.users
+        model.users = userList
+        adapter.users = model.users
         adapter.notifyDataSetChanged()
 
-        hideLoading()
+
     }
 
     private fun showLoading() {
