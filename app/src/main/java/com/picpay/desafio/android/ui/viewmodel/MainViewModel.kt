@@ -3,13 +3,12 @@ package com.picpay.desafio.android.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.picpay.desafio.android.model.User
+import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.repository.MainRepository
 import com.picpay.desafio.android.service.PicPayService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.ArrayList
 
 class MainViewModel(private val repository: MainRepository): ViewModel() {
 

@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.model
 
+import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.service.PicPayService
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
 import retrofit2.Call

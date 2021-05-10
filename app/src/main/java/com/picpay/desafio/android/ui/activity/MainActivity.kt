@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.model.MainModel
-import com.picpay.desafio.android.model.User
+import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.repository.MainRepository
 import com.picpay.desafio.android.service.PicPayService
 import com.picpay.desafio.android.ui.adapter.UserListAdapter
