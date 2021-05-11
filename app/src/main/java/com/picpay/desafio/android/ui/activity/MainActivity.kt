@@ -111,8 +111,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         model.users = userList
         adapter.users = model.users
         adapter.notifyDataSetChanged()
-
-
     }
 
     private fun showLoading() {

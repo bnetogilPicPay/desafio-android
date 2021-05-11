@@ -2,24 +2,15 @@ package com.picpay.desafio.android
 
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
-import androidx.test.espresso.Espresso.*
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
 import com.picpay.desafio.android.ui.activity.MainActivity
-import com.picpay.desafio.android.ui.viewholder.UserListItemViewHolder
-import okhttp3.internal.wait
-import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
-import org.hamcrest.Matchers
 import org.junit.Test
-import org.junit.runner.RunWith
 
 @SmallTest
 class MainActivityTest {
@@ -49,6 +40,7 @@ class MainActivityTest {
             Thread.sleep(300)
 
             onView(withId(R.id.recyclerView))
+//                .check(matches(RecyclerViewMatchers.atPosition(0, withChild())))
                 /*
                 .perform(
                     RecyclerViewActions.actionOnItemAtPosition<UserListItemViewHolder>(0,

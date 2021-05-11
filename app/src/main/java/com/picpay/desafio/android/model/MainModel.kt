@@ -28,6 +28,7 @@ class MainModel(val viewModel: MainViewModel,
                         User("https://randomuser.me/api/portraits/men/43.jpg",
                             "Usuario Quinto", 5, "userfive"))
 
+                    android.util.Log.e("MainModel", "users: ${response.errorBody()?.string()}")
                     response.body()?.let {
                         users = it
                     }
