@@ -2,24 +2,21 @@ package com.picpay.desafio.android
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.picpay.desafio.android.model.User
+import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.service.PicPayService
-import junit.framework.Assert.assertEquals
+import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Call
 import retrofit2.Response
 
-class ExampleServiceTest {
+class ServiceTest {
 
-    private lateinit var api: PicPayService
-
-    private lateinit var service: ExampleService
+    private lateinit var serviceApi: PicPayService
 
     @Before
     fun setUp() {
-        api = mock()
-        service = ExampleService(api)
+        serviceApi = mock()
     }
 
     @Test
@@ -29,18 +26,19 @@ class ExampleServiceTest {
         val expectedUsers = emptyList<User>()
 
         whenever(call.execute()).thenReturn(Response.success(expectedUsers))
-        whenever(api.getUsers()).thenReturn(call)
+        whenever(serviceApi.getUsers()).thenReturn(call)
 
         // when
-        val users = service.example()
+        val users = serviceApi.getUsers()
+        val response = users.execute().body()
 
         // then
-        assertEquals(users, expectedUsers)
+        assertEquals(expectedUsers, response)
     }
 
     @Test
     fun testLoadDataUserList() {
-// given
+        // given
         val call = mock<Call<List<User>>>()
         val expectedUsers = arrayListOf<User>(
             User("imagePath", "Tijs Maxim", 1, "@tijs"),
@@ -50,12 +48,13 @@ class ExampleServiceTest {
         )
 
         whenever(call.execute()).thenReturn(Response.success(expectedUsers))
-        whenever(api.getUsers()).thenReturn(call)
+        whenever(serviceApi.getUsers()).thenReturn(call)
 
         // when
-        val users = service.example()
+        val users = serviceApi.getUsers()
+        val response = users.execute().body()
 
         // then
-        assertEquals(users, expectedUsers)
+        assertEquals(response, expectedUsers)
     }
 }

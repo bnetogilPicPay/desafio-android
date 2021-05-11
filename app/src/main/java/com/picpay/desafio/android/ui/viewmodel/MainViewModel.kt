@@ -22,29 +22,6 @@ class MainViewModel(private val repository: MainRepository): ViewModel() {
     val contactClickLiveData : LiveData<User> get() = contactClickMutable
     val contactClickMutable = MutableLiveData<User>()
 
-    private val service: PicPayService by lazy {
-        repository.picPayService
-    }
-
-    fun loadUsers() {
-        service.getUsers()
-            .enqueue(object : Callback<List<User>> {
-                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    if (response.body() == null) {
-                        loadUsersListMutable.postValue(arrayListOf())
-                    } else {
-                        response.body()?.let {
-                            loadUsersListMutable.postValue(it)
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<List<User>>, throwable: Throwable) {
-                    loadUsersListMutableError.postValue(-1)
-                }
-            })
-    }
-
     fun postUserList(users: List<User>) {
         loadUsersListMutable.postValue(users)
     }
