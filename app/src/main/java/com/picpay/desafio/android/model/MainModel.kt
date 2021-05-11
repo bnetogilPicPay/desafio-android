@@ -15,7 +15,18 @@ class MainModel(val viewModel: MainViewModel,
         service.getUsers()
             .enqueue(object : Callback<List<User>> {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                    users = arrayListOf()
+
+                    users = arrayListOf(
+                        User("https://randomuser.me/api/portraits/men/88.jpg",
+                            "Usuario Um", 1, "userone"),
+                        User("https://randomuser.me/api/portraits/men/30.jpg",
+                            "Usuario Dois", 2, "usertwo"),
+                        User("https://randomuser.me/api/portraits/men/81.jpg",
+                            "Usuario Tres", 3, "userthree"),
+                        User("https://randomuser.me/api/portraits/men/93.jpg",
+                            "Usuario Quatro", 4, "userfour"),
+                        User("https://randomuser.me/api/portraits/men/43.jpg",
+                            "Usuario Quinto", 5, "userfive"))
 
                     response.body()?.let {
                         users = it
