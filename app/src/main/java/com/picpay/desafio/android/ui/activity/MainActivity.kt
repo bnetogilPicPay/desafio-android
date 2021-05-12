@@ -6,10 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.model.MainModel
 import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.repository.MainRepository
-import com.picpay.desafio.android.service.PicPayService
+import com.picpay.desafio.android.model.MainModel
+
+import com.picpay.desafio.android.service.repository.PicPayRepository
 import com.picpay.desafio.android.ui.adapter.UserListAdapter
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,15 +24,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         parametersOf(viewModel)
     }
 
-    private val repository: MainRepository by inject()
     private val viewModel: MainViewModel by inject()
-
-    private val service: PicPayService by lazy {
-        repository.picPayService
-    }
+    private val repository: PicPayRepository by inject()
 
     private val model: MainModel by inject {
-        parametersOf(viewModel, service)
+        parametersOf(viewModel, repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,25 +36,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         configureSupportActionBar()
         configureViewModelLiveData()
-        configureAdapter()
+        configureAdapters()
 
         loadData(savedInstanceState)
     }
 
     private fun loadData(savedInstanceState: Bundle?) {
-        existSerializableData(savedInstanceState)?.let {
-            savedInstanceState?.getSerializable("Data")?.let {
-                model.users = it as List<User>
-                adapter.users = model.users
-                adapter.notifyDataSetChanged()
-
-                hideLoading()
-            }
-        }
-
         if (model.users.isEmpty()) {
             showLoading()
             model.loadUsers()
+        } else {
+            viewModel.postUserList(model.users)
         }
     }
 
@@ -90,7 +78,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 hideLoading()
             })
             it.contactClickLiveData.observe(this, Observer {
-                android.util.Log.e("MainActivity", "userclick: $it")
                 openUserDetailActivity(it as User)
             })
         }
@@ -103,7 +90,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         startActivity(intent)
     }
 
-    private fun configureAdapter() {
+    private fun configureAdapters() {
         content.recyclerView.adapter = adapter
     }
 
