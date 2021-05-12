@@ -2,15 +2,15 @@ package com.picpay.desafio.android
 
 
 import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.service.PicPayService
+import com.picpay.desafio.android.service.repository.PicPayRepository
 
 class ExampleService(
-    private val service: PicPayService
+    private val service: PicPayRepository
 ) {
 
     fun example(): List<User> {
-        val users = service.getUsers().execute()
+        val users = service.getUsers().isEmpty()
 
-        return users.body() ?: emptyList()
+        return emptyList()
     }
 }

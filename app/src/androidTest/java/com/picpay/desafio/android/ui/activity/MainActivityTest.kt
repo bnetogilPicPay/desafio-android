@@ -2,8 +2,13 @@ package com.picpay.desafio.android.ui.activity
 
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.launchActivity
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.picpay.desafio.android.R
+import com.picpay.desafio.android.RecyclerViewMatchers
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,11 +24,9 @@ class MainActivityTest {
     fun setUp() {
     }
 
-    @Test fun testEvent() {
-        val scenario = activityScenarioRule.scenario
-        val scenario1 = launchActivity<MainActivity>().apply {
-            this.moveToState(Lifecycle.State.CREATED)
-
-        }
+    @Test fun testInContactsScreen() {
+        onView(withText("Contatos")).check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerView)).check(matches(isEnabled()))
+        onView(withId(R.id.recyclerView)).check(matches(RecyclerViewMatchers.atPosition(0, withChild(ChildMa R.id.item_user))))
     }
 }

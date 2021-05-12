@@ -8,12 +8,11 @@ open class AbstractRepository<T> {
         callResponse: Call<T>,
         subscriber: Subscriber<in T>
     ) {
-        android.util.Log.e("Repositoy", "...execute...")
         val response = callResponse.execute()
-        android.util.Log.e("Repositoy", "${response.isSuccessful}")
+
         if (response.isSuccessful) {
             val dataResponse = response.body()
-            android.util.Log.e("Repositoy", "$dataResponse")
+
             subscriber.onNext(dataResponse)
             subscriber.onCompleted()
         } else {
