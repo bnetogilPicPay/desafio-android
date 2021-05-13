@@ -7,5 +7,7 @@ data class User(
     @SerializedName("img") var img: String,
     @SerializedName("name") var name: String,
     @SerializedName("id") var id: Int,
-    @SerializedName("username") var username: String
+    @SerializedName("username") var username: String,
+    @SerializedName("enablename") var enableName: Boolean,
+    @SerializedName("enableusername") var enableUserName: Boolean
 ) : Serializable

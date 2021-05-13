@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val viewModel: MainViewModel by inject()
     private val repository: PicPayRepository by inject()
-    var espressoTestIdlingResource: CountingIdlingResource = CountingIdlingResource("Network_Call")
 
     private val model: MainModel by inject {
         parametersOf(viewModel, repository)
@@ -48,7 +47,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             showLoading()
             android.util.Log.e("MainActivity", "loadData")
             model.loadUsers()
-            espressoTestIdlingResource.increment()
         } else {
             android.util.Log.e("MainActivity", "exists users")
             viewModel.postUserList(model.users)
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("Data", model.users as Serializable)
+//        outState.putSerializable("Data", model.users as Serializable)
         super.onSaveInstanceState(outState)
     }
 
@@ -115,9 +113,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun hideLoading() {
         content.userListProgressBar.visibility = View.GONE
     }
-
-    fun getIdlingResource(): CountingIdlingResource {
-        return espressoTestIdlingResource
-    }
-
 }

@@ -28,9 +28,24 @@ class UserDetailActivity : AppCompatActivity() {
 
     private fun loadParameters() {
         intent.getSerializableExtra("user")?.let {
-            binding.content.user = it as User
+            (it as User).let {
+                turnOffEditable(it)
+                binding.content.user = it
+            }
+
             loadData(it as User)
         }
+    }
+
+    private fun turnOffEditable(user: User) {
+
+        user.enableUserName = false
+        user.enableName = false
+    }
+
+    private fun turnOnEditable(user: User) {
+        user.enableUserName = true
+        user.enableName = true
     }
 
     private fun loadData(user: User) {
@@ -44,7 +59,6 @@ class UserDetailActivity : AppCompatActivity() {
                     binding.content.progressBar.visibility = View.GONE
                     binding.content.picture.visibility = View.VISIBLE
                 }
-
                 override fun onError(e: Exception?) {
 
                 }
