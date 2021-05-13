@@ -2,6 +2,7 @@ package com.picpay.desafio.android.ui.activity
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -26,7 +27,7 @@ class MainActivityTest {
     @Test fun test_contactsScreen_hasRecyclerViewDisplayed() {
         onView(withText("Contatos"))
             .check(matches(isCompletelyDisplayed()))
-        Espresso.registerIdlingResources(rule.activity.getIdlingResource())
+        IdlingRegistry.getInstance().register(rule.activity.getIdlingResource())
         while(!rule.activity.getIdlingResource().isIdleNow)
         onView(withId(R.id.recyclerView))
             .check(matches(isEnabled()))
