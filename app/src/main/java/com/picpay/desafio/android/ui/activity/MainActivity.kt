@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.model.MainModel
-
 import com.picpay.desafio.android.service.repository.PicPayRepository
 import com.picpay.desafio.android.ui.adapter.UserListAdapter
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
@@ -18,6 +18,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 import java.io.Serializable
 
+
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val adapter: UserListAdapter by inject() {
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val viewModel: MainViewModel by inject()
     private val repository: PicPayRepository by inject()
+    var espressoTestIdlingResource: CountingIdlingResource = CountingIdlingResource("Network_Call")
 
     private val model: MainModel by inject {
         parametersOf(viewModel, repository)
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if (model.users.isEmpty()) {
             showLoading()
             model.loadUsers()
+            espressoTestIdlingResource.increment()
         } else {
             viewModel.postUserList(model.users)
         }
@@ -70,12 +73,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             it.loadUsersListLiveData.observe(this, Observer {
                 hideLoading()
                 updateUserList(it)
+                espressoTestIdlingResource.decrement()
             })
             it.loadUsersLiveDataError.observe(this, Observer {
                 hideLoading()
+                espressoTestIdlingResource.decrement()
             })
             it.loadUsersListEmptyLiveData.observe(this, Observer {
                 hideLoading()
+                espressoTestIdlingResource.decrement()
             })
             it.contactClickLiveData.observe(this, Observer {
                 openUserDetailActivity(it as User)
@@ -107,4 +113,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun hideLoading() {
         content.userListProgressBar.visibility = View.GONE
     }
+
+    fun getIdlingResource(): CountingIdlingResource {
+        return espressoTestIdlingResource
+    }
+
 }
