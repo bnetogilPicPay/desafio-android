@@ -46,9 +46,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun loadData(savedInstanceState: Bundle?) {
         if (model.users.isEmpty()) {
             showLoading()
+            android.util.Log.e("MainActivity", "loadData")
             model.loadUsers()
             espressoTestIdlingResource.increment()
         } else {
+            android.util.Log.e("MainActivity", "exists users")
             viewModel.postUserList(model.users)
         }
     }
@@ -71,17 +73,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun configureViewModelLiveData() {
         viewModel.let {
             it.loadUsersListLiveData.observe(this, Observer {
+                android.util.Log.e("MainActivity", "loadData completed")
                 hideLoading()
                 updateUserList(it)
-                espressoTestIdlingResource.decrement()
             })
             it.loadUsersLiveDataError.observe(this, Observer {
+                android.util.Log.e("MainActivity", "loadData error: $it")
                 hideLoading()
-                espressoTestIdlingResource.decrement()
             })
             it.loadUsersListEmptyLiveData.observe(this, Observer {
+                android.util.Log.e("MainActivity", "loadData empty")
                 hideLoading()
-                espressoTestIdlingResource.decrement()
             })
             it.contactClickLiveData.observe(this, Observer {
                 openUserDetailActivity(it as User)
