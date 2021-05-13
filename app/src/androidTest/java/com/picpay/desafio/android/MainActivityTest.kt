@@ -40,21 +40,10 @@ class MainActivityTest {
             Thread.sleep(300)
 
             onView(withId(R.id.recyclerView))
-//                .check(matches(RecyclerViewMatchers.atPosition(0, withChild())))
-                /*
-                .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<UserListItemViewHolder>(0,
-                    click()
-                ))*/.check(
+                .check(
                     matches(
                         RecyclerViewMatchers
                             .atPosition(0, withId(R.id.name))))
-
-//            onData(Matchers.anything())
-//                .inAdapterView(withId(R.id.recyclerView))
-//                .atPosition(0)
-//                .check(matches(hasDescendant(Matchers.allOf(withId(R.id.name),
-//                    withText("Usuario Um")))))
         }
     }
 
