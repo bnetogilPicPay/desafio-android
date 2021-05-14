@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toTopOf="@+id/picture" />
 
             <com.google.android.material.textfield.TextInputLayout
-
+                android:id="@+id/text_input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/picture"
@@ -77,7 +77,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/input_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="@dimen/content_user_detail_edit_nome_margin_top"
                 android:hint="@string/str_username"

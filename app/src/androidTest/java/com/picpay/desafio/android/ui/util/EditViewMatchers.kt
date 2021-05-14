@@ -13,7 +13,7 @@ import org.hamcrest.Matcher
 
 object EditViewMatchers {
 
-    fun enabled() :Matcher<View> {
+    fun isEnabled() :Matcher<View> {
         return object : BoundedMatcher<View, TextInputEditText>(TextInputEditText::class.java) {
             override fun describeTo(description: Description?) {
                 description?.appendText("TextInputEditText Is Disable")
@@ -21,6 +21,18 @@ object EditViewMatchers {
 
             override fun matchesSafely(input: TextInputEditText?): Boolean {
                 return input?.isEnabled == true
+            }
+        }
+    }
+
+    fun isDisabled() :Matcher<View> {
+        return object : BoundedMatcher<View, TextInputEditText>(TextInputEditText::class.java) {
+            override fun describeTo(description: Description?) {
+                description?.appendText("TextInputEditText Is Disable")
+            }
+
+            override fun matchesSafely(input: TextInputEditText?): Boolean {
+                return input?.isEnabled == false
             }
         }
     }

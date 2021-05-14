@@ -15,6 +15,7 @@ class MainModel(val viewModel: MainViewModel,
             it.subscribeOn(io())
         }.subscribe({
             users = arrayListOf()
+            android.util.Log.e("MainModel", "response-> $it")
             if (it.isEmpty()) {
                 viewModel.postEmptyList()
             }
@@ -23,6 +24,7 @@ class MainModel(val viewModel: MainViewModel,
                 viewModel.postUserList(users)
             }
         },{
+            android.util.Log.e("MainModel", "Throwable-> $it")
             viewModel.postloadUsersFailure()
         })
     }

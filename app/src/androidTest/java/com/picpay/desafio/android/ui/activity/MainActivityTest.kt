@@ -105,6 +105,6 @@ class MainActivityTest {
                 )
             );
 
-//        Thread.sleep(TIME_SLEEP)
+        Thread.sleep(TIME_SLEEP)
     }
 }

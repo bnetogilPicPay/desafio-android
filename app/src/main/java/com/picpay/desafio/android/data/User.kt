@@ -8,6 +8,6 @@ data class User(
     @SerializedName("name") var name: String,
     @SerializedName("id") var id: Int,
     @SerializedName("username") var username: String,
-    @SerializedName("enablename") var enableName: Boolean,
-    @SerializedName("enableusername") var enableUserName: Boolean
+    @SerializedName("enablename") var enableName: Boolean = true,
+    @SerializedName("enableusername") var enableUserName: Boolean = true
 ) : Serializable

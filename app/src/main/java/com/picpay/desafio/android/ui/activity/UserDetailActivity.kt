@@ -17,8 +17,8 @@ class UserDetailActivity : AppCompatActivity(R.layout.activity_user_detail) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
 
-        bindingContentView()
         configureSupportActionBar()
+        bindingContentView()
         loadParameters()
     }
 
