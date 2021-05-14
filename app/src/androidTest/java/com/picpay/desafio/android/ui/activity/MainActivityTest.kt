@@ -1,22 +1,35 @@
 package com.picpay.desafio.android.ui.activity
 
 import android.content.Context
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions.*
+import androidx.test.espresso.matcher.BoundedMatcher
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.ui.util.RecyclerViewMatchers
+import com.picpay.desafio.android.ui.util.RecyclerViewMatchers.atPosition
 import com.picpay.desafio.android.ui.viewholder.UserListItemViewHolder
+import org.hamcrest.Description
+import org.hamcrest.Matcher
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -25,7 +38,10 @@ class MainActivityTest {
     private val TIME_SLEEP: Long = 5000
 
     @get:Rule
-    var activityRule = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
+    var activityRule = activityScenarioRule<MainActivity>()
+
+//    var activityRule = ActivityTestRule<UserDetailActivity>(UserDetailActivity::class.java)
+
     private lateinit var context: Context
     private lateinit var title: String
 
@@ -83,8 +99,12 @@ class MainActivityTest {
 
         onView(withId(R.id.recyclerView))
             .perform(
-                RecyclerViewActions.actionOnItemAtPosition<UserListItemViewHolder>(
+                actionOnItemAtPosition<UserListItemViewHolder>(
                     0,
-                    click()));
+                    click()
+                )
+            );
+
+//        Thread.sleep(TIME_SLEEP)
     }
 }

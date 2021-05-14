@@ -21,6 +21,7 @@ class UserDetailActivity : AppCompatActivity(R.layout.activity_user_detail) {
         configureSupportActionBar()
         loadParameters()
     }
+
     private fun bindingContentView() {
         contentBinding = ContentUserDetailBinding.bind(content)
     }
