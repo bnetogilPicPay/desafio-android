@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.picpay.desafio.android.ui.activity.MainActivity
+import com.picpay.desafio.android.ui.util.RecyclerViewMatchers
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Test
@@ -40,21 +41,10 @@ class MainActivityTest {
             Thread.sleep(300)
 
             onView(withId(R.id.recyclerView))
-//                .check(matches(RecyclerViewMatchers.atPosition(0, withChild())))
-                /*
-                .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<UserListItemViewHolder>(0,
-                    click()
-                ))*/.check(
+                .check(
                     matches(
                         RecyclerViewMatchers
                             .atPosition(0, withId(R.id.name))))
-
-//            onData(Matchers.anything())
-//                .inAdapterView(withId(R.id.recyclerView))
-//                .atPosition(0)
-//                .check(matches(hasDescendant(Matchers.allOf(withId(R.id.name),
-//                    withText("Usuario Um")))))
         }
     }
 
