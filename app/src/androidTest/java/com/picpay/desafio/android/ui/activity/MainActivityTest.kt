@@ -40,8 +40,6 @@ class MainActivityTest {
     @get:Rule
     var activityRule = activityScenarioRule<MainActivity>()
 
-//    var activityRule = ActivityTestRule<UserDetailActivity>(UserDetailActivity::class.java)
-
     private lateinit var context: Context
     private lateinit var title: String
 
