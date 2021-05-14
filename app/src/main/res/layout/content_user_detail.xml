@@ -67,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{user.name}"
                     android:textColor="@android:color/white"
+                    android:enabled="@{user.enableName}"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -88,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{user.username}"
                     android:textColor="@android:color/white"
+                    android:enabled="@{user.enableUserName}"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
