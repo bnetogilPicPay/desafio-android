@@ -3,8 +3,6 @@ package com.picpay.desafio.android.model
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.picpay.desafio.android.data.User
-import com.picpay.desafio.android.model.MainModel
-import com.picpay.desafio.android.service.datasource.PicPayDataSource
 import com.picpay.desafio.android.service.repository.PicPayRepository
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
 import junit.framework.TestCase.assertEquals
@@ -22,7 +20,7 @@ class MainModelTest {
     @Before
     fun setUp() {
         repository = mock()
-        viewModel = MainViewModel()
+        viewModel = mock()
         mainModel = MainModel(viewModel, repository)
     }
 
@@ -55,7 +53,7 @@ class MainModelTest {
 
         val observable = Observable.create {
                 subscriber: Subscriber<in List<User>>? ->
-            mainModel.users = arrayList.toList()
+            mainModel.users = emptyList<User>()
             subscriber?.onNext(mainModel.users)
         }
 

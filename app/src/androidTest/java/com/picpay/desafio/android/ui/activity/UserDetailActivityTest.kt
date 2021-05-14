@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class UserDetailActivityTest {
-    private val TIME_SLEEP: Long = 3000
+    private val TIME_SLEEP: Long = 2000
 
 
     @get:Rule
@@ -68,16 +68,11 @@ class UserDetailActivityTest {
     fun testUserDetailNotEditable() {
         gotoUserDetailActivity()
 
-        Thread.sleep(TIME_SLEEP)
-
         onView(withText(title))
             .check(ViewAssertions.matches(isCompletelyDisplayed()))
 
         onView(withId(R.id.input_name)).let {
             it.check(ViewAssertions.matches(EditViewMatchers.isDisabled()))
-
-            Thread.sleep(200)
-
             it.check(ViewAssertions.matches(isDisplayed()))
         }
     }

@@ -3,7 +3,6 @@ package com.picpay.desafio.android.model
 import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.service.repository.PicPayRepository
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
-import rx.android.schedulers.AndroidSchedulers.mainThread
 import rx.schedulers.Schedulers.io
 
 class MainModel(val viewModel: MainViewModel,
@@ -11,11 +10,12 @@ class MainModel(val viewModel: MainViewModel,
                 var users: List<User> = emptyList<User>()) {
 
     fun loadUsers() {
+        viewModel.postShowLoad()
         repository.getUsers().compose {
             it.subscribeOn(io())
         }.subscribe({
             users = arrayListOf()
-            android.util.Log.e("MainModel", "response-> $it")
+            viewModel.postHideLoad()
             if (it.isEmpty()) {
                 viewModel.postEmptyList()
             }
@@ -24,8 +24,8 @@ class MainModel(val viewModel: MainViewModel,
                 viewModel.postUserList(users)
             }
         },{
-            android.util.Log.e("MainModel", "Throwable-> $it")
-            viewModel.postloadUsersFailure()
+            viewModel.postHideLoad()
+            viewModel.postLoadUsersFailure()
         })
     }
 }

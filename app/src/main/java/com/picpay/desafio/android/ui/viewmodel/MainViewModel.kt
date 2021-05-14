@@ -17,6 +17,9 @@ class MainViewModel(): ViewModel() {
     val contactClickLiveData : LiveData<User> get() = contactClickMutable
     val contactClickMutable = MutableLiveData<User>()
 
+    val showLoadMutable = MutableLiveData<Boolean>()
+    val showLoadLiveData: LiveData<Boolean> get() = showLoadMutable
+
     fun postUserList(users: List<User>) {
         loadUsersListMutable.postValue(users)
     }
@@ -25,7 +28,15 @@ class MainViewModel(): ViewModel() {
         loadUsersListEmptyMutable.postValue(null)
     }
 
-    fun postloadUsersFailure() {
+    fun postLoadUsersFailure() {
         loadUsersListMutableError.postValue(-1)
+    }
+
+    fun postShowLoad() {
+        showLoadMutable.postValue(true)
+    }
+
+    fun postHideLoad() {
+        showLoadMutable.postValue(false)
     }
 }

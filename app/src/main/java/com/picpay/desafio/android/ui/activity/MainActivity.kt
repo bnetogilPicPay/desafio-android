@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.test.espresso.idling.CountingIdlingResource
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.model.MainModel
@@ -44,15 +43,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun loadData() {
         if (model.users.isEmpty()) {
-            showLoading()
             model.loadUsers()
         } else {
             viewModel.postUserList(model.users)
         }
-    }
-
-    private fun existSerializableData(savedInstanceState: Bundle?): Boolean? {
-        return savedInstanceState?.containsKey("Data")
     }
 
     private fun configureSupportActionBar() {
@@ -63,6 +57,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun configureViewModelLiveData() {
         viewModel.let {
+            it.showLoadLiveData.observe(this, Observer {
+                turnVisibleGoneProgress(it)
+            })
             it.loadUsersListLiveData.observe(this, Observer {
                 hideLoading()
                 updateUserList(it)
@@ -96,8 +93,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         adapter.notifyDataSetChanged()
     }
 
-    private fun showLoading() {
-        content.userListProgressBar.visibility = View.VISIBLE
+    private fun turnVisibleGoneProgress(visibility: Boolean) {
+        content.userListProgressBar.visibility = if (visibility) View.VISIBLE else View.GONE
     }
 
     private fun hideLoading() {
