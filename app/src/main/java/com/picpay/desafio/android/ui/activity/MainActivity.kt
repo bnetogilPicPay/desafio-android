@@ -39,27 +39,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         configureViewModelLiveData()
         configureAdapters()
 
-        loadData(savedInstanceState)
+        loadData()
     }
 
-    private fun loadData(savedInstanceState: Bundle?) {
+    private fun loadData() {
         if (model.users.isEmpty()) {
             showLoading()
-            android.util.Log.e("MainActivity", "loadData")
             model.loadUsers()
         } else {
-            android.util.Log.e("MainActivity", "exists users")
             viewModel.postUserList(model.users)
         }
     }
 
     private fun existSerializableData(savedInstanceState: Bundle?): Boolean? {
         return savedInstanceState?.containsKey("Data")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-//        outState.putSerializable("Data", model.users as Serializable)
-        super.onSaveInstanceState(outState)
     }
 
     private fun configureSupportActionBar() {
@@ -71,16 +64,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun configureViewModelLiveData() {
         viewModel.let {
             it.loadUsersListLiveData.observe(this, Observer {
-                android.util.Log.e("MainActivity", "loadData completed")
                 hideLoading()
                 updateUserList(it)
             })
             it.loadUsersLiveDataError.observe(this, Observer {
-                android.util.Log.e("MainActivity", "loadData error: $it")
                 hideLoading()
             })
             it.loadUsersListEmptyLiveData.observe(this, Observer {
-                android.util.Log.e("MainActivity", "loadData empty")
                 hideLoading()
             })
             it.contactClickLiveData.observe(this, Observer {

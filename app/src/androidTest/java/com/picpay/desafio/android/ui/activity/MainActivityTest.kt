@@ -22,6 +22,8 @@ import org.junit.runner.RunWith
 @SmallTest
 class MainActivityTest {
 
+    private val TIME_SLEEP: Long = 5000
+
     @get:Rule
     var activityRule = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
     private lateinit var context: Context
@@ -46,7 +48,9 @@ class MainActivityTest {
 
         onView(withId(R.id.recyclerView)).let {
             it.check(matches(isEnabled()))
-            Thread.sleep(5000)
+
+            Thread.sleep(TIME_SLEEP)
+
             it.check(matches(isCompletelyDisplayed()))
         }
     }
@@ -60,7 +64,7 @@ class MainActivityTest {
         onView(withId(R.id.recyclerView))
             .check(matches(isEnabled()))
 
-        Thread.sleep(5000)
+        Thread.sleep(TIME_SLEEP)
 
         onView(withId(R.id.recyclerView))
             .check(matches(RecyclerViewMatchers.notIsEmpty()))
@@ -75,7 +79,7 @@ class MainActivityTest {
         onView(withId(R.id.recyclerView))
             .check(matches(isEnabled()))
 
-        Thread.sleep(5000)
+        Thread.sleep(TIME_SLEEP)
 
         onView(withId(R.id.recyclerView))
             .perform(
