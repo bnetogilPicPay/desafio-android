@@ -4,28 +4,42 @@ import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.service.repository.PicPayRepository
 import com.picpay.desafio.android.ui.viewmodel.MainViewModel
 import rx.schedulers.Schedulers.io
+import java.io.Serializable
 
 class MainModel(val viewModel: MainViewModel,
                 val repository: PicPayRepository,
-                var users: List<User> = emptyList<User>()) {
+                var users: List<User> = emptyList<User>()) : Serializable{
+
+    fun onCreateView() {
+        if (users.isEmpty()) {
+            loadUsers()
+        } else {
+            viewModel.postUserList(users)
+        }
+    }
 
     fun loadUsers() {
-        viewModel.postShowLoad()
+        viewModel.showLoad()
         repository.getUsers().compose {
             it.subscribeOn(io())
         }.subscribe({
             users = arrayListOf()
-            viewModel.postHideLoad()
+            viewModel.hideLoad()
             if (it.isEmpty()) {
                 viewModel.postEmptyList()
             }
             if (it.isNotEmpty()) {
                 users = it
+                saveUserList(users)
                 viewModel.postUserList(users)
             }
         },{
-            viewModel.postHideLoad()
-            viewModel.postLoadUsersFailure()
+            viewModel.hideLoad()
+            viewModel.showLoadUserListError()
         })
+    }
+
+    private fun saveUserList(users: List<User>?) {
+
     }
 }

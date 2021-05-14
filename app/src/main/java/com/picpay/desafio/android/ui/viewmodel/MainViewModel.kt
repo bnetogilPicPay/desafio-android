@@ -5,14 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.picpay.desafio.android.data.User
 
-class MainViewModel(): ViewModel() {
-
+class MainViewModel: ViewModel() {
     val loadUsersListLiveData : LiveData<List<User>> get() = loadUsersListMutable
     val loadUsersListEmptyLiveData : LiveData<Void?> get() = loadUsersListEmptyMutable
-    val loadUsersLiveDataError : LiveData<Int> get() = loadUsersListMutableError
+    val errorOnLoadUserListLiveData : LiveData<Int> get() = showErrorOnLoadUserListMutable
     private val loadUsersListMutable = MutableLiveData<List<User>>()
     private val loadUsersListEmptyMutable = MutableLiveData<Void?>()
-    private val loadUsersListMutableError = MutableLiveData<Int>()
+    private val showErrorOnLoadUserListMutable = MutableLiveData<Int>()
 
     val contactClickLiveData : LiveData<User> get() = contactClickMutable
     val contactClickMutable = MutableLiveData<User>()
@@ -28,15 +27,15 @@ class MainViewModel(): ViewModel() {
         loadUsersListEmptyMutable.postValue(null)
     }
 
-    fun postLoadUsersFailure() {
-        loadUsersListMutableError.postValue(-1)
+    fun showLoadUserListError() {
+        showErrorOnLoadUserListMutable.postValue(-1)
     }
 
-    fun postShowLoad() {
+    fun showLoad() {
         showLoadMutable.postValue(true)
     }
 
-    fun postHideLoad() {
+    fun hideLoad() {
         showLoadMutable.postValue(false)
     }
 }

@@ -61,19 +61,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 turnVisibleGoneProgress(it)
             })
             it.loadUsersListLiveData.observe(this, Observer {
-                hideLoading()
                 updateUserList(it)
             })
-            it.loadUsersLiveDataError.observe(this, Observer {
-                hideLoading()
+            it.errorOnLoadUserListLiveData.observe(this, Observer {
+                showErrorOnLoadUserList()
             })
             it.loadUsersListEmptyLiveData.observe(this, Observer {
-                hideLoading()
+                showEmptyList()
             })
             it.contactClickLiveData.observe(this, Observer {
                 openUserDetailActivity(it as User)
             })
         }
+    }
+
+    private fun showEmptyList() {
+
+    }
+
+    private fun showErrorOnLoadUserList() {
+
     }
 
     private fun openUserDetailActivity(user: User) {
