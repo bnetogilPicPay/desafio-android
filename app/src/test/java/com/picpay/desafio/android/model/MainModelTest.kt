@@ -1,4 +1,4 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.model
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -18,7 +18,6 @@ class MainModelTest {
     private lateinit var mainModel: MainModel
     private lateinit var viewModel: MainViewModel
     private lateinit var repository: PicPayRepository
-    private lateinit var dataDataSource: PicPayDataSource
 
     @Before
     fun setUp() {
@@ -30,7 +29,7 @@ class MainModelTest {
     @Test
     fun testLoadUsers() {
         // Given
-        val arrayList = arrayListOf(User("A" , "A", 1 , "A"),
+        val responseList = arrayListOf(User("A" , "A", 1 , "A"),
             User("B" , "B", 2 , "B"))
         val expectedList = arrayListOf(User("A" , "A", 1 , "A"),
             User("B" , "B", 2 , "B"))
@@ -38,7 +37,7 @@ class MainModelTest {
         val observable = Observable.create { subscriber: Subscriber<in List<User>>? -> }
 
         whenever(repository.getUsers()).then {
-            mainModel.users = arrayList.toList()
+            mainModel.users = responseList.toList()
             observable
         }
 
