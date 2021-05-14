@@ -1,6 +1,5 @@
 package com.picpay.desafio.android.model
 
-import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.picpay.desafio.android.data.User
 import com.picpay.desafio.android.service.repository.PicPayRepository
@@ -8,33 +7,42 @@ import com.picpay.desafio.android.ui.viewmodel.MainViewModel
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 import rx.Observable
 import rx.Subscriber
 
+@RunWith(MockitoJUnitRunner::class)
 class MainModelTest {
 
-    private lateinit var mainModel: MainModel
+    @Mock
     private lateinit var viewModel: MainViewModel
+    @Mock
     private lateinit var repository: PicPayRepository
+
+    private lateinit var mainModel: MainModel
 
     @Before
     fun setUp() {
-        repository = mock()
-        viewModel = mock()
         mainModel = MainModel(viewModel, repository)
     }
+
+    private fun createResponseList() = listOf(
+        User("A", "A", 1, "A"),
+        User("B", "B", 2, "B")
+    )
 
     @Test
     fun testLoadUsers() {
         // Given
-        val responseList = arrayListOf(User("A" , "A", 1 , "A"),
-            User("B" , "B", 2 , "B"))
+        val responseList = createResponseList()
         val expectedList = arrayListOf(User("A" , "A", 1 , "A"),
             User("B" , "B", 2 , "B"))
 
         val observable = Observable.create { subscriber: Subscriber<in List<User>>? -> }
 
-        whenever(repository.getUsers()).then {
+        whenever(repository.getUsers()).thenAnswer {
             mainModel.users = responseList.toList()
             observable
         }
